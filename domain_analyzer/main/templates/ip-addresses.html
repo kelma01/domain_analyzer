@@ -11,5 +11,27 @@
     <header>
         <div class="brand-name">CyberTool</div>
     </header>
+    <main>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="domain">Domain Adresi:</label>
+            <input type="text" id="domain" name="domain" required>
+            <button type="submit">Ara</button>
+        </form>
+
+        {% if json_data %}
+            <h2>Sonuçlar:</h2>
+            <table>
+                <tbody>
+                    {% for key, value in result.items %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </main>
 </body>
 </html>
