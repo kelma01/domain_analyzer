@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberTool</title>
-    <link rel="stylesheet" href="../static/css/ip_addreeses.css">
+    <link rel="stylesheet" href="../static/css/domain_analyzer.css">
     <script>
         function togglePorts() {
             const portsSection = document.getElementById("ports-section");
-            portsSection.style.display = portsSection.style.display === "none" ? "block" : "none";
+
+            if (portsSection.style.maxHeight) {
+                // Kapatma işlemi
+                portsSection.style.maxHeight = null;
+            } else {
+                // Açma işlemi
+                portsSection.style.maxHeight = portsSection.scrollHeight + "px";
+            }
         }
     </script>
 </head>
@@ -38,14 +45,24 @@
         {% endif %}
 
         {% if open_ports %}
-            <button onclick="togglePorts()">Açık Portlar</button>
-            <div id="ports-section" style="display: none;">
-                <h3>Açık Portlar</h3>
-                <ul>
-                    {% for port in open_ports %}
-                        <li>Port: {{ port.0 }}, Protokol: {{ port.1 }}</li>
-                    {% endfor %}
-                </ul>
+            <button onclick="togglePorts()">Open Ports</button>
+            <div id="ports-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Port</th>
+                            <th>Service</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for port in open_ports %}
+                            <tr>
+                                <td>{{ port.0 }}</td>
+                                <td>{{ port.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         {% endif %}
     </main>
