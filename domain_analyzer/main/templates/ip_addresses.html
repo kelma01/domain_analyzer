@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberTool</title>
+    <link rel="stylesheet" href="../static/css/ip_addreeses.css">
+    <script>
+        function togglePorts() {
+            const portsSection = document.getElementById("ports-section");
+            portsSection.style.display = portsSection.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="brand-name">CyberTool</div>
+    </header>
+    <main>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="domain">Enter domain to scan:</label>
+            <input type="text" id="user_input" name="user_input" required>
+            <button type="submit">Start!</button>
+        </form>
+
+        {% if result %}
+            <table>
+                <tbody>
+                    {% for key, value in result.items %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if open_ports %}
+            <button onclick="togglePorts()">Açık Portlar</button>
+            <div id="ports-section" style="display: none;">
+                <h3>Açık Portlar</h3>
+                <ul>
+                    {% for port in open_ports %}
+                        <li>Port: {{ port.0 }}, Protokol: {{ port.1 }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>

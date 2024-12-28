@@ -1,4 +1,4 @@
 from django import forms
 
 class TextInputForm(forms.Form):
-    user_input = forms.CharField(label='Enter Domain', max_length=100)
+    user_input = forms.CharField(label='Enter Domain', required=True)
