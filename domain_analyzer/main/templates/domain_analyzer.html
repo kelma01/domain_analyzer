@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberTool</title>
     <link rel="stylesheet" href="../static/css/domain_analyzer.css">
-    <script>
-        function togglePorts() {
-            const portsSection = document.getElementById("ports-section");
-
-            if (portsSection.style.maxHeight) {
-                // Kapatma işlemi
-                portsSection.style.maxHeight = null;
-            } else {
-                // Açma işlemi
-                portsSection.style.maxHeight = portsSection.scrollHeight + "px";
-            }
-        }
-    </script>
+    <script src="../static/js/ports_toggle.js"></script>
 </head>
 <body>
     <header>

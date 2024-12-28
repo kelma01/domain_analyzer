@@ -1,4 +1,11 @@
 function togglePorts() {
     const portsSection = document.getElementById("ports-section");
-    portsSection.style.display = portsSection.style.display === "none" ? "block" : "none";
+
+    if (portsSection.style.maxHeight) {
+        // Kapatma işlemi
+        portsSection.style.maxHeight = null;
+    } else {
+        // Açma işlemi
+        portsSection.style.maxHeight = portsSection.scrollHeight + "px";
+    }
 }
