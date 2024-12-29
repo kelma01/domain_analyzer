@@ -23,7 +23,5 @@ def scan_ssl_cert(domain):
     now = now.replace(tzinfo=timezone.utc) #converting naive datetime to aware datetime
     
     validity_status = 'True' if now < not_valid_after else 'False'
-    print(validity_status)
-
-
-scan_ssl_cert("google.com")
+    
+    return validity_status, not_valid_after
