@@ -74,6 +74,28 @@ th {
 #ports-section th {
     background-color: #f2f2f2;
 }
+#whois-section {
+    margin-top: 20px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease;
+}
+
+#whois-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#whois-section th, #whois-section td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#whois-section th {
+    background-color: #f2f2f2;
+}
 
 button {
     margin-top: 20px;

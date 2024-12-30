@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.http import *
 from django.template import loader
 from .forms import TextInputForm
-import nmap
 
 from .tools.ip_address import get_ip
 from .tools.port_scanner import scan_ports
 from .tools.ssl_scanner import scan_ssl_cert
+from .tools.whois_search import get_whois
 
 def hello(request):
     return render(request, 'index.html')
@@ -22,18 +22,20 @@ def analyze_domain(request):
             ipv4 = get_ip(domain)
             ssl_validity, ssl_not_valid_after = scan_ssl_cert(domain)
             ssl_not_valid_after = str(ssl_not_valid_after)[0:10].replace("-","/")
-            
-            
-            #ports = scan_ports(ipv4) #TODO: will be open in when release time come
-            ports = [['80', 'http'],['443', 'https']]
+            whois_response = get_whois(domain) #[[],[],[],[]]
+            for i in whois_response:
+                i[0] = str(i[0]).replace("_", " ").title()
 
+            ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
+             
             payload = {
                 "IPv4": ipv4,
                 "SSL Certificate Validity": ssl_validity,
                 "SSL Certificate Not Valid After": ssl_not_valid_after
             }
 
+
     else:
         form = TextInputForm()
 
-    return render(request, 'domain_analyzer.html', {'form': form, 'result': payload, 'open_ports': ports})
+    return render(request, 'domain_analyzer.html', {'form': form, 'result': payload, 'open_ports': ports, 'whois_response': whois_response})

@@ -53,6 +53,22 @@
                 </table>
             </div>
         {% endif %}
+
+        {% if open_ports %}
+            <button onclick="toggleWhois()">WHOIS Information</button>
+            <div id="whois-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
+                <table>
+                    <tbody>
+                        {% for whois_info in whois_response %}
+                            <tr>
+                                <td>{{ whois_info.0 }}</td>
+                                <td>{{ whois_info.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </main>
 </body>
 </html>
