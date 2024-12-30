@@ -17,11 +17,21 @@ def scan_ssl_cert(domain):
         if server_scan_result.scan_status == ServerScanStatusEnum.ERROR_NO_CONNECTIVITY:
             exit(0)
 
+    json_output = create_json_output(all_server_scan_results, datetime.datetime.now(), datetime.datetime.now())
+
     not_valid_after = all_server_scan_results[0].scan_result.certificate_info.result.certificate_deployments[0].received_certificate_chain[0].not_valid_after_utc
     now = datetime.datetime.now()
-
     now = now.replace(tzinfo=timezone.utc) #converting naive datetime to aware datetime
-    
     validity_status = 'True' if now < not_valid_after else 'False'
     
-    return validity_status, not_valid_after
+    return json_output, validity_status
+
+def create_json_output(all_server_scan_results, date_scans_started, date_scans_completed):
+    json_output = SslyzeOutputAsJson(
+        server_scan_results=[ServerScanResultAsJson.model_validate(result) for result in all_server_scan_results],
+        invalid_server_strings=[],  # Not needed here - specific to the CLI interface
+        date_scans_started=date_scans_started,
+        date_scans_completed=date_scans_completed,
+    )
+    return json_output
+    

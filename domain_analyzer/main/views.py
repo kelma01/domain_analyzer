@@ -20,22 +20,31 @@ def analyze_domain(request):
         if form.is_valid():
             domain = form.cleaned_data['user_input']
             ipv4 = get_ip(domain)
-            ssl_validity, ssl_not_valid_after = scan_ssl_cert(domain)
-            ssl_not_valid_after = str(ssl_not_valid_after)[0:10].replace("-","/")
+
+
+            ssl_info, ssl_validity_status = scan_ssl_cert(domain)
+
+
             whois_response = get_whois(domain) #[[],[],[],[]]
             for i in whois_response:
                 i[0] = str(i[0]).replace("_", " ").title()
 
             ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
              
-            payload = {
+            ip_payload = {
                 "IPv4": ipv4,
-                "SSL Certificate Validity": ssl_validity,
-                "SSL Certificate Not Valid After": ssl_not_valid_after
+            }
+            ssl_payload = {
+                "Validity Status": ssl_validity_status,
+                "Hostname": ssl_info["server_scan_results"][0]["server_location"]["hostname"], #TODO TypeError: 'SslyzeOutputAsJson' object is not subscriptable
+                "Port": ssl_info["server_scan_results"][0]["server_location"]["port"],
+                "IP Address": ssl_info["server_scan_results"][0]["server_location"]["ip_address"],
+                "Not Valid After": str[ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]].replace("T", " ").replace("Z", "").replace("-","/"),
+                "SAN": ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["subject_alternative_name"]["dns_names"]
             }
 
 
     else:
         form = TextInputForm()
 
-    return render(request, 'domain_analyzer.html', {'form': form, 'result': payload, 'open_ports': ports, 'whois_response': whois_response})
+    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'ssl_info': ssl_payload, 'open_ports': ports, 'whois_response': whois_response})

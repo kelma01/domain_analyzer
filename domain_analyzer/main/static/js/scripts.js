@@ -14,3 +14,11 @@ function toggleWhois() {
     else
     whoisSection.style.maxHeight = whoisSection.scrollHeight + "px";
 }
+function toggleSsl() {
+    const sslSection = document.getElementById("ssl-section");
+
+    if (sslSection.style.maxHeight)
+        sslSection.style.maxHeight = null;
+    else
+    sslSection.style.maxHeight = sslSection.scrollHeight + "px";
+}
