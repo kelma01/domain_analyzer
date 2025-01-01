@@ -107,7 +107,22 @@
                 </table>
             </div>
         {% endif %}
-        
+
+        {% if subdomains %}
+            <button onclick="toggleSubdomains()">Subdomains</button>
+            <div id="subdomain-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
+                <table>
+                    <tbody>
+                        {% for subdomain in subdomains %}
+                            <tr>
+                                <td>{{ subdomain }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
     </main>
 </body>
 </html>

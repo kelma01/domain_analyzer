@@ -8,6 +8,7 @@ from .tools.port_scanner import scan_ports
 from .tools.ssl_scanner import scan_ssl_cert
 from .tools.whois_search import get_whois
 from .tools.dns_records import get_records
+from .tools.subdomain_finder import get_subdomains
 
 def hello(request):
     return render(request, 'index.html')
@@ -28,6 +29,7 @@ def analyze_domain(request):
             whois_response = get_whois(domain)
             ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
             dns_records = get_records(domain)
+            subdomains = get_subdomains(domain)
              
             #PAYLOADS
             ip_payload = {
@@ -44,4 +46,4 @@ def analyze_domain(request):
     else:
         form = TextInputForm()
 
-    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'ssl_info': ssl_payload, 'open_ports': ports, 'whois_response': whois_response, 'dns_records': dns_records})
+    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'ssl_info': ssl_payload, 'open_ports': ports, 'whois_response': whois_response, 'dns_records': dns_records, 'subdomains': subdomains})

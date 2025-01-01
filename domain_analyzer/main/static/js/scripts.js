@@ -30,3 +30,11 @@ function toggleDNSRecords() {
     else
     dnsRecordSection.style.maxHeight = dnsRecordSection.scrollHeight + "px";
 }
+function toggleSubdomains() {
+    const subdomainSection = document.getElementById("subdomain-section");
+
+    if (subdomainSection.style.maxHeight)
+        subdomainSection.style.maxHeight = null;
+    else
+    subdomainSection.style.maxHeight = subdomainSection.scrollHeight + "px";
+}
