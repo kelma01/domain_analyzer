@@ -18,19 +18,16 @@ def analyze_domain(request):
     elif request.method == 'POST':
         form = TextInputForm(request.POST)
         if form.is_valid():
+            #RETRIEVING DATA
             domain = form.cleaned_data['user_input']
             ipv4 = get_ip(domain)
-
-
             ssl_info, ssl_validity_status = scan_ssl_cert(domain)
-
-
-            whois_response = get_whois(domain) #[[],[],[],[]]
+            whois_response = get_whois(domain)
             for i in whois_response:
                 i[0] = str(i[0]).replace("_", " ").title()
-
             ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
              
+            #PAYLOADS
             ip_payload = {
                 "IPv4": ipv4,
             }
@@ -39,8 +36,11 @@ def analyze_domain(request):
                 "Hostname": ssl_info["server_scan_results"][0]["server_location"]["hostname"], #TODO TypeError: 'SslyzeOutputAsJson' object is not subscriptable
                 "Port": ssl_info["server_scan_results"][0]["server_location"]["port"],
                 "IP Address": ssl_info["server_scan_results"][0]["server_location"]["ip_address"],
-                "Not Valid After": str[ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]].replace("T", " ").replace("Z", "").replace("-","/"),
+                "Not Valid After": str(ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]).replace("T", " ").replace("Z", "").replace("-","/"),
                 "SAN": ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["subject_alternative_name"]["dns_names"]
+            }
+            whois_payload = {
+                
             }
 
 

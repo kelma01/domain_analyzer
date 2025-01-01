@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 from sslyze import *
 from datetime import timezone
+import json
 
 
 def scan_ssl_cert(domain):
@@ -23,8 +24,10 @@ def scan_ssl_cert(domain):
     now = datetime.datetime.now()
     now = now.replace(tzinfo=timezone.utc) #converting naive datetime to aware datetime
     validity_status = 'True' if now < not_valid_after else 'False'
+
+    result = json.loads(json_output)
     
-    return json_output, validity_status
+    return result, validity_status
 
 def create_json_output(all_server_scan_results, date_scans_started, date_scans_completed):
     json_output = SslyzeOutputAsJson(
@@ -33,5 +36,8 @@ def create_json_output(all_server_scan_results, date_scans_started, date_scans_c
         date_scans_started=date_scans_started,
         date_scans_completed=date_scans_completed,
     )
-    return json_output
+    json_output_as_str = json_output.model_dump_json()
+
+    return json_output_as_str
     
+scan_ssl_cert("google.com")
