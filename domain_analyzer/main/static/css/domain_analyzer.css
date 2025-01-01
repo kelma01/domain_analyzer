@@ -137,3 +137,25 @@ button:hover {
 .hidden {
     display: none;
 }
+#dns-records-section {
+    margin-top: 20px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s ease;
+}
+
+#dns-records-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#dns-records-section th, #dns-records-section td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#dns-records-section th {
+    background-color: #f2f2f2;
+}

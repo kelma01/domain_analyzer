@@ -22,3 +22,11 @@ function toggleSsl() {
     else
     sslSection.style.maxHeight = sslSection.scrollHeight + "px";
 }
+function toggleDNSRecords() {
+    const dnsRecordSection = document.getElementById("dns-records-section");
+
+    if (dnsRecordSection.style.maxHeight)
+        dnsRecordSection.style.maxHeight = null;
+    else
+    dnsRecordSection.style.maxHeight = dnsRecordSection.scrollHeight + "px";
+}

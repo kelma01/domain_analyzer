@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <div class="brand-name">CyberTool</div>
+        <a href="/" class="brand-name" style="text-decoration:none;">CyberTool</a>
     </header>
     <main>
         <form method="POST" action="">
@@ -79,6 +79,28 @@
                             <tr>
                                 <td>{{ whois_info.0 }}</td>
                                 <td>{{ whois_info.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        
+        {% if dns_records %}
+            <button onclick="toggleDNSRecords()">DNS Records</button>
+            <div id="dns-records-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Record Type</th>
+                            <th>Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rec in dns_records %}
+                            <tr>
+                                <td>{{ rec.0 }}</td>
+                                <td>{{ rec.1 }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
