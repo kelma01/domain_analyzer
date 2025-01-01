@@ -24,8 +24,8 @@
                 <tbody>
                     {% for key, value in ip_info.items %}
                         <tr>
-                            <td>{{ key }}</td>
-                            <td>{{ value }}</td>
+                            <p style="font-size:40px;" align="center">{{ key }}</p>
+                            <p style="font-size:25px;" align="center">{{ value }}</p>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -37,10 +37,10 @@
             <div id="ssl-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
                 <table>
                     <tbody>
-                        {% for ssl_info in whois_response %}
+                        {% for k,v  in ssl_info.items %}
                             <tr>
-                                <td>{{ ssl_info.0 }}</td>
-                                <td>{{ ssl_info.1 }}</td>
+                                <td>{{ k }}</td>
+                                <td>{{ v }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -70,7 +70,7 @@
             </div>
         {% endif %}
 
-        {% if open_ports %}
+        {% if whois_response %}
             <button onclick="toggleWhois()">WHOIS Information</button>
             <div id="whois-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
                 <table>

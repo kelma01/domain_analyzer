@@ -29,18 +29,15 @@ def analyze_domain(request):
              
             #PAYLOADS
             ip_payload = {
-                "IPv4": ipv4,
+                "IPv4:": ipv4,
             }
             ssl_payload = {
                 "Validity Status": ssl_validity_status,
-                "Hostname": ssl_info["server_scan_results"][0]["server_location"]["hostname"], #TODO TypeError: 'SslyzeOutputAsJson' object is not subscriptable
+                "Hostname": ssl_info["server_scan_results"][0]["server_location"]["hostname"],
                 "Port": ssl_info["server_scan_results"][0]["server_location"]["port"],
                 "IP Address": ssl_info["server_scan_results"][0]["server_location"]["ip_address"],
                 "Not Valid After": str(ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]).replace("T", " ").replace("Z", "").replace("-","/"),
                 "SAN": ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["subject_alternative_name"]["dns_names"]
-            }
-            whois_payload = {
-                
             }
 
 
