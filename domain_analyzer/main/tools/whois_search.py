@@ -12,4 +12,8 @@ def get_whois(domain):
     for key in json_output:
         key_values.append([key, json_output[key]])
 
+    
+    for i in key_values:
+        i[0] = str(i[0]).replace("_", " ").title()
+
     return key_values

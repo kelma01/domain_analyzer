@@ -13,19 +13,19 @@ def hello(request):
     return render(request, 'index.html')
 
 def analyze_domain(request):
-    payload = None
     if request.method == 'GET':
         return render(request, 'domain_analyzer.html')
     elif request.method == 'POST':
         form = TextInputForm(request.POST)
+
         if form.is_valid():
+
             #RETRIEVING DATA
             domain = form.cleaned_data['user_input']
+
             ipv4 = get_ip(domain)
             ssl_info, ssl_validity_status = scan_ssl_cert(domain)
             whois_response = get_whois(domain)
-            for i in whois_response:
-                i[0] = str(i[0]).replace("_", " ").title()
             ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
             dns_records = get_records(domain)
              
@@ -41,8 +41,6 @@ def analyze_domain(request):
                 "Not Valid After": str(ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]).replace("T", " ").replace("Z", "").replace("-","/"),
                 "SAN": ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["subject_alternative_name"]["dns_names"]
             }
-
-
     else:
         form = TextInputForm()
 
