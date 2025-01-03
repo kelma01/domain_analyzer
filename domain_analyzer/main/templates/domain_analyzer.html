@@ -9,120 +9,137 @@
 </head>
 <body>
     <header>
-        <a href="/" class="brand-name" style="text-decoration:none;">CyberTool</a>
+        <a href="/" class="brand-name">CyberTool</a>
     </header>
     <main>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <label for="domain">Enter domain to scan:</label>
-            <input type="text" id="user_input" name="user_input" required>
-            <button type="submit">Start!</button>
-        </form>
+        <section class="form-container">
+            <h1>Domain Analyzer</h1>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <label for="domain">Enter a domain to analyze:</label>
+                <input type="text" id="user_input" name="user_input" placeholder="e.g., example.com" required>
+                <button type="submit" class="primary-btn">Analyze</button>
+            </form>
+        </section>
 
-        {% if ip_info %}
-            <table>
-                <tbody>
-                    {% for key, value in ip_info.items %}
-                        <tr>
-                            <p style="font-size:35px;" align="center">{{ key }}</p> <!-- buraya daha güzel bir görüntü katılacak -->
-                            <p style="font-size:25px;" align="center">{{ value }}</p>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
+        <section class="results-container">
+            {% if ip_info %}
+                <div class="result-card">
+                    <h2>IP Information</h2>
+                    <table>
+                        <tbody>
+                            {% for key, value in ip_info.items %}
+                                <tr>
+                                    <td>{{ key }}</td>
+                                    <td>{{ value }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
 
-        {% if ssl_info %}
-            <button onclick="toggleSsl()">SSL Information</button>
-            <div id="ssl-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
-                <table>
-                    <tbody>
-                        {% for k,v  in ssl_info.items %}
-                            <tr>
-                                <td>{{ k }}</td>
-                                <td>{{ v }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
+            {% if ssl_info %}
+                <div class="result-card">
+                    <button class="toggle-btn" onclick="toggleSsl()">SSL Information</button>
+                    <div id="ssl-section" style="display: none; overflow: hidden;">
+                        <table>
+                            <tbody>
+                                {% for k,v in ssl_info.items %}
+                                    <tr>
+                                        <td>{{ k }}</td>
+                                        <td>{{ v }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
 
-        {% if open_ports %}
-            <button onclick="togglePorts()">Open Ports</button>
-            <div id="ports-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Port</th>
-                            <th>Service</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for port in open_ports %}
-                            <tr>
-                                <td>{{ port.0 }}</td>
-                                <td>{{ port.1 }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
+            {% if open_ports %}
+                <div class="result-card">
+                    <button class="toggle-btn" onclick="togglePorts()">Open Ports</button>
+                    <div id="ports-section" style="display: none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Port</th>
+                                    <th>Service</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for port in open_ports %}
+                                    <tr>
+                                        <td>{{ port.0 }}</td>
+                                        <td>{{ port.1 }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
 
-        {% if whois_response %}
-            <button onclick="toggleWhois()">WHOIS Information</button>
-            <div id="whois-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
-                <table>
-                    <tbody>
-                        {% for whois_info in whois_response %}
-                            <tr>
-                                <td>{{ whois_info.0 }}</td>
-                                <td>{{ whois_info.1 }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
-        
-        {% if dns_records %}
-            <button onclick="toggleDNSRecords()">DNS Records</button>
-            <div id="dns-records-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Record Type</th>
-                            <th>Information</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for rec in dns_records %}
-                            <tr>
-                                <td>{{ rec.0 }}</td>
-                                <td>{{ rec.1 }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
+            {% if whois_response %}
+                <div class="result-card">
+                    <button class="toggle-btn" onclick="toggleWhois()">WHOIS Information</button>
+                    <div id="whois-section" style="display: none;">
+                        <table>
+                            <tbody>
+                                {% for whois_info in whois_response %}
+                                    <tr>
+                                        <td>{{ whois_info.0 }}</td>
+                                        <td>{{ whois_info.1 }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
 
-        {% if subdomains %}
-            <button onclick="toggleSubdomains()">Subdomains</button>
-            <div id="subdomain-section" style="max-height: 0; overflow: hidden; transition: max-height 0.5s ease;">
-                <table>
-                    <tbody>
-                        {% for subdomain in subdomains %}
-                            <tr>
-                                <td>{{ subdomain }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
+            {% if dns_records %}
+                <div class="result-card">
+                    <button class="toggle-btn" onclick="toggleDNSRecords()">DNS Records</button>
+                    <div id="dns-records-section" style="display: none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Record Type</th>
+                                    <th>Information</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for rec in dns_records %}
+                                    <tr>
+                                        <td>{{ rec.0 }}</td>
+                                        <td>{{ rec.1 }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
 
+            {% if subdomains %}
+                <div class="result-card">
+                    <button class="toggle-btn" onclick="toggleSubdomains()">Subdomains</button>
+                    <div id="subdomain-section" style="display: none;">
+                        <table>
+                            <tbody>
+                                {% for subdomain in subdomains %}
+                                    <tr>
+                                        <td>{{ subdomain }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
     </main>
 </body>
 </html>

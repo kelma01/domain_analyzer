@@ -28,8 +28,8 @@ def analyze_domain(request):
             ssl_info, ssl_validity_status = scan_ssl_cert(domain)
             whois_response = get_whois(domain)
             ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
-            dns_records = get_records(domain)
-            subdomains = get_subdomains(domain)
+            #dns_records = get_records(domain)
+            #subdomains = get_subdomains(domain)
              
             #PAYLOADS
             ip_payload = {
@@ -46,4 +46,5 @@ def analyze_domain(request):
     else:
         form = TextInputForm()
 
-    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'ssl_info': ssl_payload, 'open_ports': ports, 'whois_response': whois_response, 'dns_records': dns_records, 'subdomains': subdomains})
+    #return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'ssl_info': ssl_payload, 'open_ports': ports, 'whois_response': whois_response, 'dns_records': dns_records, 'subdomains': subdomains})
+    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'open_ports': ports, 'whois_response': whois_response})

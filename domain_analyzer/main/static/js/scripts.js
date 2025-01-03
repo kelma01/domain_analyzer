@@ -1,40 +1,24 @@
-function togglePorts() {
-    const portsSection = document.getElementById("ports-section");
-
-    if (portsSection.style.maxHeight)
-        portsSection.style.maxHeight = null;
-    else
-        portsSection.style.maxHeight = portsSection.scrollHeight + "px";
-}
-function toggleWhois() {
-    const whoisSection = document.getElementById("whois-section");
-
-    if (whoisSection.style.maxHeight)
-        whoisSection.style.maxHeight = null;
-    else
-    whoisSection.style.maxHeight = whoisSection.scrollHeight + "px";
-}
 function toggleSsl() {
     const sslSection = document.getElementById("ssl-section");
-
-    if (sslSection.style.maxHeight)
-        sslSection.style.maxHeight = null;
-    else
-    sslSection.style.maxHeight = sslSection.scrollHeight + "px";
+    sslSection.style.display = sslSection.style.display === "none" ? "block" : "none";
 }
+
+function togglePorts() {
+    const portsSection = document.getElementById("ports-section");
+    portsSection.style.display = portsSection.style.display === "none" ? "block" : "none";
+}
+
+function toggleWhois() {
+    const whoisSection = document.getElementById("whois-section");
+    whoisSection.style.display = whoisSection.style.display === "none" ? "block" : "none";
+}
+
 function toggleDNSRecords() {
-    const dnsRecordSection = document.getElementById("dns-records-section");
-
-    if (dnsRecordSection.style.maxHeight)
-        dnsRecordSection.style.maxHeight = null;
-    else
-    dnsRecordSection.style.maxHeight = dnsRecordSection.scrollHeight + "px";
+    const dnsRecordsSection = document.getElementById("dns-records-section");
+    dnsRecordsSection.style.display = dnsRecordsSection.style.display === "none" ? "block" : "none";
 }
+
 function toggleSubdomains() {
     const subdomainSection = document.getElementById("subdomain-section");
-
-    if (subdomainSection.style.maxHeight)
-        subdomainSection.style.maxHeight = null;
-    else
-    subdomainSection.style.maxHeight = subdomainSection.scrollHeight + "px";
+    subdomainSection.style.display = subdomainSection.style.display === "none" ? "block" : "none";
 }
