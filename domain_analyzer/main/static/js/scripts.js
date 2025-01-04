@@ -22,3 +22,8 @@ function toggleSubdomains() {
     const subdomainSection = document.getElementById("subdomain-section");
     subdomainSection.style.display = subdomainSection.style.display === "none" ? "block" : "none";
 }
+
+function toggleRobots() {
+    const robotsSection = document.getElementById("robots-section");
+    robotsSection.style.display = robotsSection.style.display === "none" ? "block" : "none";
+}

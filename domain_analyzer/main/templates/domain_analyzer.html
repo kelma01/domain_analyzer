@@ -139,6 +139,23 @@
                     </div>
                 </div>
             {% endif %}
+
+            {% if robots %}
+                <div class="result-card">
+                    <button class="toggle-btn" onclick="toggleRobots()">Robots Information</button>
+                    <div id="robots-section" style="display: none;">
+                        <table>
+                            <tbody>
+                                {% for robot in robots %}
+                                    <tr>
+                                        <td>{{ robot }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
         </section>
     </main>
 </body>
