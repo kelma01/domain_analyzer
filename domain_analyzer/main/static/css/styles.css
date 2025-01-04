@@ -1,76 +1,58 @@
 /* Genel Stil */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-color: #f8f9fa; 
     color: #333;
+    line-height: 1.6;
 }
 
-/* Header */
 header {
-    background-color: #4CAF50;
-    color: white;
+    background: linear-gradient(90deg, #2c3e50, #34495e);
+    color: #ecf0f1;
+    padding: 1.5rem;
     text-align: center;
-    padding: 1rem 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #1abc9c; 
 }
 
 .brand-name {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: color 0.3s ease;
+}
+
+.brand-name:hover {
+    color: #1abc9c; /* Hover rengini daha belirgin yap */
 }
 
 /* Menü Bar */
 .menu-bar {
     background-color: #333;
     display: flex;
-    justify-content: space-around; /* Menüleri eşit dağıt */
+    justify-content: space-around; /* Menü öğelerini birbirinden ayır */
     align-items: center;
-    padding: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .menu-item {
     position: relative;
-    color: white;
+    color: #ecf0f1;
+    text-transform: capitalize;
+    font-weight: 500;
+    padding: 0.8rem 1.2rem;
+    border-radius: 5px;
     cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 0.8rem 1rem;
-    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .menu-item:hover {
-    background-color: #575757;
+    background-color: #1abc9c;
+    color: #fff;
 }
 
-/* Dropdown Menü */
-.dropdown {
-    display: none;
-    position: absolute;
-    background-color: #444;
-    top: 100%;
-    left: 0;
-    min-width: 150px;
-    z-index: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-item {
-    color: white;
-    padding: 0.8rem;
-    border-bottom: 1px solid #575757;
-    text-align: left;
-    cursor: pointer;
-}
-
-.dropdown-item:last-child {
-    border-bottom: none;
-}
-
-.dropdown-item:hover {
-    background-color: #575757;
-}
-
-.menu-item:hover .dropdown {
-    display: block;
-}

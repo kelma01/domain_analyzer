@@ -25,8 +25,8 @@ def analyze_domain(request):
             domain = form.cleaned_data['user_input']
 
             ipv4 = get_ip(domain)
-            ssl_info, ssl_validity_status = scan_ssl_cert(domain)
-            whois_response = get_whois(domain)
+            #ssl_info, ssl_validity_status = scan_ssl_cert(domain)
+            #whois_response = get_whois(domain)
             ports = [['80', 'http'],['443', 'https']] #TODO: ports = scan_ports(ipv4)
             #dns_records = get_records(domain)
             #subdomains = get_subdomains(domain)
@@ -35,16 +35,16 @@ def analyze_domain(request):
             ip_payload = {
                 "IPv4:": ipv4,
             }
-            ssl_payload = {
-                "Validity Status": ssl_validity_status,
-                "Hostname": ssl_info["server_scan_results"][0]["server_location"]["hostname"],
-                "Port": ssl_info["server_scan_results"][0]["server_location"]["port"],
-                "IP Address": ssl_info["server_scan_results"][0]["server_location"]["ip_address"],
-                "Not Valid After": str(ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]).replace("T", " ").replace("Z", "").replace("-","/"),
-                "SAN": ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["subject_alternative_name"]["dns_names"]
-            }
+            #ssl_payload = {
+            #    "Validity Status": ssl_validity_status,
+            #    "Hostname": ssl_info["server_scan_results"][0]["server_location"]["hostname"],
+            #    "Port": ssl_info["server_scan_results"][0]["server_location"]["port"],
+            #    "IP Address": ssl_info["server_scan_results"][0]["server_location"]["ip_address"],
+            #    "Not Valid After": str(ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["not_valid_after"]).replace("T", " ").replace("Z", "").replace("-","/"),
+            #    "SAN": ssl_info["server_scan_results"][0]["scan_result"]["certificate_info"]["result"]["certificate_deployments"][0]["received_certificate_chain"][0]["subject_alternative_name"]["dns_names"]
+            #}
     else:
         form = TextInputForm()
 
     #return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'ssl_info': ssl_payload, 'open_ports': ports, 'whois_response': whois_response, 'dns_records': dns_records, 'subdomains': subdomains})
-    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'open_ports': ports, 'whois_response': whois_response})
+    return render(request, 'domain_analyzer.html', {'form': form, 'ip_info': ip_payload, 'open_ports': ports})
